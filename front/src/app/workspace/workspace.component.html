@@ -1,0 +1,39 @@
+<div class="full-screen" style="display: flex;flex-flow: row;">
+	<div class="container" style="max-width: 20%;max-height: 100%;overflow: auto;background: rgba(0,0,0,0.7)">
+		<nav class="navbar navbar-dark">
+			<a routerLink="" class="navbar-brand">
+				<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
+				Disaster Planning
+			</a>
+		</nav>
+		<ul class="nav nav-pills nav-stacked">
+			<li class="nav-item"><a routerLink="/" class="nav-link">Home</a></li>
+			<li class="nav-item"><a routerLink="drgoals" class="nav-link">DR Goals</a></li>
+			<li class="nav-item"><a routerLink="drstrategy" class="nav-link">DR Strategy</a></li>
+			<li class="nav-item"><a routerLink="preventive" class="nav-link">Preventive Strategy</a></li>
+			<li class="nav-item"><a routerLink="vendors" class="nav-link">Vendors</a></li>
+			<li class="nav-item"><a routerLink="stakeholders" class="nav-link">Stakeholders</a></li>
+			<li class="nav-item"><a routerLink="infrastructure" class="nav-link">Critical Infrastructure</a></li>
+			<li class="nav-item"><a routerLink="bia" class="nav-link">Application BIA</a></li>
+			<li class="nav-item"><a routerLink="testlog" class="nav-link">Application Test Log</a></li>
+			<li class="nav-item"><a routerLink="backup" class="nav-link">Backups</a></li>
+			<li class="nav-item"><a routerLink="trigger" class="nav-link">DR Trigger</a></li>
+		</ul>
+	</div>
+	<div class="container" style="padding: 0px;max-height: 100%;overflow: auto;">
+		<div class="container-fluid" style="background: #21b2fe">
+			<nav class="navbar navbar-dark" style="color: #ffffff !important;">
+				<span class="navbar-brand">
+					Example Company
+				</span>
+				<span class="navbar-text float-xs-right">
+					Hello User !
+					<i class="fa fa-cog" aria-hidden="true"></i>
+				</span>
+			</nav>
+		</div>
+		<div class="container-fluid">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>
