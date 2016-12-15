@@ -6,10 +6,32 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./drgoals.component.css']
 })
 export class DrgoalsComponent implements OnInit {
+	goals:any;
+	showForm:boolean;
 
-  constructor() { }
+  constructor() { 
+  	this.goals=[{text:'goal1'},{text:'goal2'},{text:'goal3'}];
+  	this.showForm=false;
+  }
 
   ngOnInit() {
   }
+
+  edit(){
+  	this.showForm=true;
+  }
+
+  saveForm(){
+  	this.showForm=false;
+  }
+
+  add(){
+  	this.goals.push({text:""});
+  }
+
+  remove(i){
+  	this.goals.splice(i,1);
+  }
+
 
 }

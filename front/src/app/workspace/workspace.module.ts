@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { WorkspaceComponent } from './workspace.component';
 import { WorkspaceRouting } from './workspace.routing';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -17,6 +18,7 @@ import { TriggerComponent } from './trigger/trigger.component';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     WorkspaceRouting
   ],
   declarations: [WorkspaceComponent, DashboardComponent, DrgoalsComponent, DrstrategyComponent, PreventiveComponent, StakeholderComponent, VendorComponent, InfraComponent, BiaComponent, TestlogComponent, BackupComponent, TriggerComponent]
