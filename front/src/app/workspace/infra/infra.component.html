@@ -1,3 +1,86 @@
-<p>
-  infra works!
-</p>
+<nav class="navbar navbar-light">
+	<span class="navbar-brand">
+		Critical Infrastructure
+	</span>
+	<span class="navbar-text float-xs-right">
+		<button class="btn btn-outline-success" (click)="add()">Add</button>
+	</span>
+</nav>
+<div class="container">
+	<table class="table" style="margin-top: 10px;">
+		<tbody *ngFor="let inf of infralist;let i=index">
+			<tr class="thead-default">
+				<th colspan='2'>Application : {{inf.name}}</th>
+				<th style="text-align: right;"><button class="btn btn-outline-info" (click)="edit(inf)">Edit</button></th>
+			</tr>
+			<tr>
+				<th>Item</th>
+				<th>Availability</th>
+				<th>Comments</th>
+			</tr>
+			<tr *ngFor="let itm of inf.items">
+				<td>{{itm.name}}</td>
+				<td *ngIf="itm.check=='true'">Yes</td>
+				<td *ngIf="itm.check=='false'">No</td>
+				<td>{{itm.comments}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" (click)="modal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Infrastructure</h4>
+      </div>
+       <form (ngSubmit)="save()">
+      <div class="modal-body">
+        <div class="container">
+        		<div class="form-group row">
+        			<label class="col-xs-2 col-form-label">Name</label>
+					<div class="col-xs-4">
+						<input class="form-control" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="infra.name">
+					</div>
+        		</div>
+        		<div class="form-group row">
+        			<label class="col-xs-4 col-form-label">Item</label>
+        			<label class="col-xs-1 col-form-label">Yes</label>
+        			<label class="col-xs-1 col-form-label">No</label>
+        			<label class="col-xs-4 col-form-label">Comments</label>
+        			<label class="col-xs-2 col-form-label"><button class="btn btn-outline-info" (click)="additem()" type="button">Add</button></label>
+        		</div>
+        		<div class="form-group row" *ngFor="let item of infra.items;let i=index">
+        			<div class="col-xs-4">
+						<input class="form-control" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.name" required>
+					</div>
+					<div class="col-xs-1">
+						<label class="form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions{{i}}" id="inlineRadio1" value="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.check" required>
+						</label>
+					</div>
+					<div class="col-xs-1">
+						<label class="form-check-inline">
+							<input class="form-check-input" type="radio" name="inlineRadioOptions{{i}}" id="inlineRadio1" value="false" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.check" required>
+						</label>
+					</div>
+					<div class="col-xs-4">
+						<input class="form-control" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="item.comments" required>
+					</div>
+					<div class="col-xs-2">
+						<button class="btn btn-outline-danger" [disabled]="infra.items.length==1" (click)="removeitem(i)" type="button">&times;</button>
+					</div>
+        		</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.hide()">Close</button>
+        <button type="button" *ngIf="infra._id!=''" class="btn btn-danger" (click)="remove()">Remove</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>

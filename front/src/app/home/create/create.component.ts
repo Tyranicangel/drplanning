@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Company } from './company'
+
 
 @Component({
   selector: 'app-create',
@@ -6,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-
-  constructor() { }
+	company:Company;
+  constructor(private router:Router) { 
+  	this.company=new Company;
+  }
 
   ngOnInit() {
+  }
+
+  create() {
+  	localStorage.setItem('companyData',JSON.stringify(this.company));
+  	this.router.navigate(['/register']);
   }
 
 }

@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { HomeRouting } from './home.routing';
+import { ModalModule } from 'ng2-bootstrap';
 
 import { MainComponent } from './main/main.component';
 import { CreateComponent } from './create/create.component';
@@ -12,11 +13,13 @@ import { LoginComponent } from './login/login.component';
 import { FindComponent } from './find/find.component';
 import { InviteComponent } from './invite/invite.component';
 import { SignupComponent } from './signup/signup.component';
+import { ResetComponent } from './reset/reset.component';
+import { VerifyComponent } from './verify/verify.component';
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, HomeRouting
+    CommonModule, FormsModule, HomeRouting, ModalModule
   ],
-  declarations: [HomeComponent, MainComponent, CreateComponent, RegisterComponent, ForgotComponent, LoginComponent, FindComponent, InviteComponent, SignupComponent]
+  declarations: [HomeComponent, MainComponent, CreateComponent, RegisterComponent, ForgotComponent, LoginComponent, FindComponent, InviteComponent, SignupComponent, ResetComponent, VerifyComponent]
 })
 export class HomeModule { }

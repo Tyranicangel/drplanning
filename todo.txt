@@ -1,0 +1,12 @@
+Backup:
+Cloud backup
+Tape backup
+Local Storage backup
+
+Change critical infra
+
+Responsive
+
+Dashboard
+
+Profile and user maintenance

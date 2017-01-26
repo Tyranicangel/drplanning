@@ -4,6 +4,9 @@ html,body{
 	height: 100%;
 	margin: auto;
 }
+textarea{
+  resize: none;
+}
 .loader{
 	width: 100%;
 	height: 100%;
@@ -55,4 +58,27 @@ html,body{
 }
 ::-webkit-scrollbar-corner {
   background: transparent;
+}
+.left_part{
+  max-height: 100%;
+  overflow: auto;
+}
+@media (min-width: 544px) {
+
+}
+
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 992px) {
+  .left_part{
+    max-width: 40% !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .left_part{
+    max-width: 30% !important;
+  }
 }

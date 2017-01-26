@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ApiService } from '../../api.service';
+import { LoaderService } from '../../loader/loader.service';
+import { ModalDirective } from 'ng2-bootstrap';
+import { Strategy } from './strategy';
 
 @Component({
   selector: 'app-drstrategy',
@@ -6,15 +10,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./drstrategy.component.css']
 })
 export class DrstrategyComponent implements OnInit {
-	strats:any;
+	strats:Strategy[];
 	showForm:boolean;
 
-  constructor() { 
-  	this.strats=[{text:'dr strategy1'},{text:'dr strategy2'},{text:'dr strategy3'}];
+  constructor(private api:ApiService, private loader:LoaderService) { 
+  	this.strats=[];
   	this.showForm=false;
   }
 
   ngOnInit() {
+    this.api.getAll('strategy/all')
+      .subscribe(
+        data=>{
+          this.strats=data;
+          if(this.strats.length==0){
+            let strat1:Strategy=new Strategy;
+            this.strats.push(strat1);
+            let strat2:Strategy=new Strategy;
+            this.strats.push(strat2);
+            let strat3:Strategy=new Strategy;
+            this.strats.push(strat3);
+            this.showForm=true;
+          }
+        });
   }
 
   edit(){
@@ -22,11 +40,25 @@ export class DrstrategyComponent implements OnInit {
   }
 
   saveForm(){
-  	this.showForm=false;
+    this.loader.show();
+  	this.api.post('strategy/create',{strats:this.strats})
+    .subscribe(
+      data=>{
+        this.loader.hide();
+        if(data.success){
+          this.api.getAll('strategy/all')
+          .subscribe(
+            data=>{
+              this.strats=data;
+            });
+        }
+      });
+    this.showForm=false;
   }
 
   add(){
-  	this.strats.push({text:""});
+  	let strat:Strategy=new Strategy;
+    this.strats.push(strat);
   }
 
   remove(i){

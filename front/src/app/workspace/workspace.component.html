@@ -1,5 +1,5 @@
 <div class="full-screen" style="display: flex;flex-flow: row;">
-	<div class="container" style="max-width: 20%;max-height: 100%;overflow: auto;background: rgba(0,0,0,0.7)">
+	<div class="container" style="max-width: 20%;max-height: 100%;overflow: auto;background: rgba(0,0,0,0.7); padding: 0px;">
 		<nav class="navbar navbar-dark">
 			<a routerLink="" class="navbar-brand">
 				<img src="assets/logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -24,10 +24,10 @@
 		<div class="container-fluid" style="background: #21b2fe">
 			<nav class="navbar navbar-dark" style="color: #ffffff !important;">
 				<span class="navbar-brand">
-					Example Company
+					{{company}}
 				</span>
 				<span class="navbar-text float-xs-right">
-					Hello User !
+					Hello {{username}} !
 					<i class="fa fa-cog" aria-hidden="true"></i>
 				</span>
 			</nav>
