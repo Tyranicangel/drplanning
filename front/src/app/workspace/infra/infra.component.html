@@ -7,25 +7,28 @@
 	</span>
 </nav>
 <div class="container">
+	<div *ngFor="let ilist of infralist">
+	<span class="lead" *ngIf="ilist.infralist.length>0">{{ilist.infratype.name}}</span>
 	<table class="table" style="margin-top: 10px;">
-		<tbody *ngFor="let inf of infralist;let i=index">
+		<tbody *ngFor="let inf of ilist.infralist;let i=index">
 			<tr class="thead-default">
 				<th colspan='2'>Application : {{inf.name}}</th>
 				<th style="text-align: right;"><button class="btn btn-outline-info" (click)="edit(inf)">Edit</button></th>
 			</tr>
 			<tr>
 				<th>Item</th>
-				<th>Availability</th>
+				<th></th>
 				<th>Comments</th>
 			</tr>
 			<tr *ngFor="let itm of inf.items">
 				<td>{{itm.name}}</td>
-				<td *ngIf="itm.check=='true'">Yes</td>
-				<td *ngIf="itm.check=='false'">No</td>
+				<td *ngIf="itm.check=='true'"><i style="color:green;font-size: 1.5em;" class="fa fa-check" aria-hidden="true"></i></td>
+				<td *ngIf="itm.check=='false'"><i style="color:red;font-size: 1.5em;" class="fa fa-times" aria-hidden="true"></i></td>
 				<td>{{itm.comments}}</td>
 			</tr>
 		</tbody>
 	</table>
+	</div>
 </div>
 <div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
@@ -40,12 +43,21 @@
       <div class="modal-body">
         <div class="container">
         		<div class="form-group row">
+        			<label class="col-xs-2 col-form-label">Type</label>
+					<div class="col-xs-4">
+						<select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="infra.type" (ngModelChange)="changed()" required>
+							<option value="">Select</option>
+							<option *ngFor="let default of defaults" value="{{default.infratype._id}}">{{default.infratype.name}}</option>
+						</select>
+					</div>
+        		</div>
+        		<div class="form-group row">
         			<label class="col-xs-2 col-form-label">Name</label>
 					<div class="col-xs-4">
 						<input class="form-control" type="text" [ngModelOptions]="{standalone: true}" [(ngModel)]="infra.name">
 					</div>
         		</div>
-        		<div class="form-group row">
+        		<div class="form-group row" *ngIf="infra.items.length>0">
         			<label class="col-xs-4 col-form-label">Item</label>
         			<label class="col-xs-1 col-form-label">Yes</label>
         			<label class="col-xs-1 col-form-label">No</label>

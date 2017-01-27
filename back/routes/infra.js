@@ -3,12 +3,13 @@ var router = express.Router();
 var Company = require('../models/company');
 var User = require('../models/user');
 var Infra = require('../models/infra');
+var IGroup = require('../models/infragroup');
 
 router.get('/all', function(req, res, next) {
 	var user=req.authdata;
 	User.findById(user.id,function(err,data){
-		Infra.find({company:data.company,active:true}).sort('name').exec(function(err,dat){
-			return res.json(dat);
+		IGroup.find({company:data.company,active:true}).populate('infratype infralist').exec(function(err,das){
+			return res.json(das);
 		});
 	});
 });
@@ -16,11 +17,15 @@ router.get('/all', function(req, res, next) {
 router.post('/remove',function(req,res,next) {
 	var user=req.authdata;
 	var itm=req.body.infra;
-	Infra.findById(itm._id,function(err,data){
-		data.active=false;
-		data.save().then(function(result){
-			Infra.find({company:data.company,active:true}).sort('name').exec(function(err,dat){
-				return res.json(dat);
+	User.findById(user.id,function(err,data){
+		Infra.findById(itm._id,function(err,dat){
+			dat.active=false;
+			dat.save().then(function(result){
+				IGroup.update({infralist:result._id},{$pullAll:{infralist:[result._id]}}).exec(function(err,da){
+					IGroup.find({company:data.company,active:true}).populate('infratype infralist').exec(function(err,das){
+						return res.json(das);
+					});
+				});
 			});
 		});
 	});
@@ -31,13 +36,36 @@ router.post('/save',function(req,res,next) {
 	var itm=req.body.infra;
 	User.findById(user.id,function(err,data){
 		if(itm._id){
-			Infra.findById(itm._id,function(err,data){
-				data.name=itm.name,
-				data.items=itm.items,
-				data.createdBy=data._id,
-				data.save().then(function(result){
-					Infra.find({company:data.company,active:true}).sort('name').exec(function(err,dat){
-						return res.json(dat);
+			Infra.findById(itm._id,function(err,sd){
+				sd.type=itm.type,
+				sd.name=itm.name,
+				sd.items=itm.items,
+				sd.createdBy=data._id,
+				sd.save().then(function(result){
+					IGroup.update({infralist:result._id},{$pullAll:{infralist:[result._id]}}).exec(function(err,da){
+						IGroup.findOne({infratype:itm.type},function(err,dat){
+							if(dat){
+								dat.infralist.push(result._id);
+								dat.save(function(err,respo){
+									IGroup.find({company:data.company,active:true}).populate('infratype infralist').exec(function(err,das){
+										return res.json(das);
+									});
+								});
+							}
+							else{
+								ig=new IGroup({
+									infralist:[result._id],
+									infratype:itm.type,
+									company:data.company,
+									active:true,
+								});
+								ig.save(function(err,respo){
+									IGroup.find({company:data.company,active:true}).populate('infratype infralist').exec(function(err,das){
+										return res.json(das);
+									});
+								});
+							}
+						});
 					});
 				});
 			});
@@ -45,14 +73,34 @@ router.post('/save',function(req,res,next) {
 		else{
 			var infra=new Infra({
 				name:itm.name,
+				type:itm.type,
 				items:itm.items,
-				company:data.company,
 				createdBy:data._id,
 				active:true
 			});
 			infra.save(function(err,result){
-				Infra.find({company:data.company,active:true}).sort('name').exec(function(err,dat){
-					return res.json(dat);
+				IGroup.findOne({infratype:itm.type},function(err,dat){
+					if(dat){
+						dat.infralist.push(result._id);
+						dat.save(function(err,respo){
+							IGroup.find({company:data.company,active:true}).populate('infratype infralist').exec(function(err,das){
+								return res.json(das);
+							});
+						});
+					}
+					else{
+						ig=new IGroup({
+							infralist:[result._id],
+							infratype:itm.type,
+							company:data.company,
+							active:true,
+						});
+						ig.save(function(err,respo){
+							IGroup.find({company:data.company,active:true}).populate('infratype infralist').exec(function(err,das){
+								return res.json(das);
+							});
+						});
+					}
 				});
 			});
 		}

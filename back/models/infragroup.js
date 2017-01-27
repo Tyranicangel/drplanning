@@ -1,15 +1,16 @@
 var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
 
-var defaultinfraSchema=new Schema({
-	items:[String],
+var infragroupSchema=new Schema({
+	infralist:[{type:Schema.ObjectId,ref:'Infra'}],
 	infratype:{type:Schema.ObjectId,ref:'Infratype'},
+	company:{type:Schema.ObjectId,ref:'Company'},
 	active:Boolean,
 	created_at:Date,
 	updated_at:Date
 });
 
-defaultinfraSchema.pre('save',function(next){
+infragroupSchema.pre('save',function(next){
 	var currentDate=new Date();
 	this.updated_at=currentDate;
 	if(!this.created_at){
@@ -18,4 +19,4 @@ defaultinfraSchema.pre('save',function(next){
 	next();
 });
 
-module.exports=mongoose.model('Defaultinfra',defaultinfraSchema);
+module.exports=mongoose.model('Infragroup',infragroupSchema);

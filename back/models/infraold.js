@@ -5,7 +5,7 @@ var infraoldSchema=new Schema({
 	name:{type:String,required:true},
 	items:Schema.Types.Mixed,
 	infra:{type:Schema.ObjectId,ref:'Infra'},
-	infratype:{type:Schema.ObjectId,ref:'Infratype'},
+	type:String,
 	createdBy:{type:Schema.ObjectId,ref:'User'},
 	active:Boolean,
 	created_at:Date,

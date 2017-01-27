@@ -1,14 +1,14 @@
 var mongoose=require('mongoose');
 var Schema=mongoose.Schema;
 
-var infratype=new Schema({
+var infratypeSchema=new Schema({
 	name:{type:String,required:true},
 	active:Boolean,
 	created_at:Date,
 	updated_at:Date
 });
 
-infratype.pre('save',function(next){
+infratypeSchema.pre('save',function(next){
 	var currentDate=new Date();
 	this.updated_at=currentDate;
 	if(!this.created_at){
@@ -17,4 +17,4 @@ infratype.pre('save',function(next){
 	next();
 });
 
-module.exports=mongoose.model('Infratype',infratype);
+module.exports=mongoose.model('Infratype',infratypeSchema);

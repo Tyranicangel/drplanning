@@ -14,6 +14,7 @@ export class InfraComponent implements OnInit {
 	@ViewChild('modal') public Modal:ModalDirective;
 	infra:Infra;
 	infralist:Array<Infra>;
+  defaults:Array<any>;
 
   constructor(private api:ApiService, private loader:LoaderService) { 
   	this.infra=new Infra();
@@ -21,18 +22,33 @@ export class InfraComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.api.getAll('defaultinfra/default')
+    .subscribe(data=>{
+      this.defaults=data;
+    });
   }
 
   ngAfterViewInit() {
   	this.api.getAll('infra/all')
   	.subscribe(data=>{
+      console.log(data);
   		this.infralist=data;
   		if(data.length==0){
 		  	this.infra=new Infra();
-		  	this.infra.addthree();
 		  	this.Modal.show();
   		}
   	});
+  }
+
+  changed(){
+    if(this.infra.items.length==0){
+      for (var i = 0; i < this.defaults.length; i++) {
+        if(this.defaults[i].infratype._id==this.infra.type){
+          this.infra.addDefault(this.defaults[i].items);
+          break;
+        }
+      }
+    }
   }
 
   additem(){
@@ -47,7 +63,6 @@ export class InfraComponent implements OnInit {
 
   add(){
   	this.infra=new Infra();
-  	this.infra.addthree();
   	this.Modal.show();
   }
 

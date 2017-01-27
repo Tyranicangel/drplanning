@@ -3,11 +3,13 @@ import { Item } from './item';
 export class Infra {
 	_id:string;
 	name:string;
+	type:string;
 	items:Item[];
 
 	constructor(){
 		this._id="";
 		this.name="";
+		this.type="";
 		this.items=[];
 	}
 
@@ -25,5 +27,14 @@ export class Infra {
 
 	remove(i){
 		this.items.splice(i,1);
+	}
+
+	addDefault(dat){
+		for (var i = 0;i < dat.length; i++) {
+			let it=new Item();
+			it.name=dat[i];
+			it.check="";
+			this.items.push(it);
+		}
 	}
 }

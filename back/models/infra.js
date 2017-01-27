@@ -4,9 +4,8 @@ var InfraOld=require('./infraold');
 
 var infraSchema=new Schema({
 	name:{type:String,required:true},
+	type:String,
 	items:Schema.Types.Mixed,
-	infratype:{type:Schema.ObjectId,ref:'Infratype'},
-	company:{type:Schema.ObjectId,ref:'Company'},
 	createdBy:{type:Schema.ObjectId,ref:'User'},
 	active:Boolean,
 	created_at:Date,
@@ -25,6 +24,7 @@ infraSchema.pre('save',function(next){
 	else{
 		var oi=new InfraOld({
 			name:this.name,
+			type:this.type,
 			items:this.items,
 			infra:this._id,
 			createdBy:this.createdBy,
