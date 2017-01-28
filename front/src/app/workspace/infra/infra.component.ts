@@ -31,7 +31,6 @@ export class InfraComponent implements OnInit {
   ngAfterViewInit() {
   	this.api.getAll('infra/all')
   	.subscribe(data=>{
-      console.log(data);
   		this.infralist=data;
   		if(data.length==0){
 		  	this.infra=new Infra();

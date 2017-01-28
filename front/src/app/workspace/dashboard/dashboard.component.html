@@ -31,22 +31,22 @@
 		<div class="row bordered">
 			<div class="col col-xs-2 left">Contracts</div>
 			<div class="col col-xs-10 right">
-				<div>Expiring in 3 months : 0</div>
-				<div>Expiring in 6 months : 2</div>
+				<div>Already expired : {{contract_exp}}</div>
+				<div>Expiring in 3 months : {{contract_3}}</div>
+				<div>Expiring in 6 months : {{contract_6}}</div>
 			</div>
 		</div>
 		<div class="row bordered">
 			<div class="col col-xs-2 left">Annual Drills</div>
 			<div class="col col-xs-10 right">
-				<div>2016 : 11/12 Applications have been tested</div>
-				<div>2017 : 3/12 Applications have been tested</div>
+				<div>2016 : {{tested_2016}}/{{apps}} Applications have been tested</div>
+				<div>2017 : {{tested_2017}}/{{apps}} Applications have been tested</div>
 			</div>
 		</div>
 		<div class="row bordered">
 			<div class="col col-xs-2 left">Backups</div>
 			<div class="col col-xs-10 right">
-				<div>2016 : 11/12 Applications have been tested</div>
-				<div>2017 : 3/12 Applications have been tested</div>
+				<div>{{backlogged}}/{{apps}} Applications have backups</div>
 			</div>
 		</div>
 		<div class="row bordered">
