@@ -16,6 +16,7 @@ var backup=require('./backup');
 var testlog=require('./testlog');
 var defaultinfra=require('./defaultinfra');
 var infratype=require('./infratype');
+var report=require('./report');
 
 var auth=function(req,res,next){
 	var token=req.body.token || req.query.token || req.headers['jwt-authtoken'];
@@ -54,5 +55,6 @@ router.use('/backup',auth,backup);
 router.use('/testlog',auth,testlog);
 router.use('/defaultinfra',auth,defaultinfra);
 router.use('/infratype',auth,infratype);
+router.use('/report',auth,report);
 
 module.exports = router;
